@@ -1,5 +1,7 @@
 package com.jpasample.dao;
 import com.jpasample.model.Cat;
+import com.jpasample.model.Department;
+import com.jpasample.model.Employee;
 import com.jpasample.model.Person;
 import java.util.List;
 import java.util.Random;
@@ -61,15 +63,24 @@ public class HiberDAO {
 
     @Transactional
     public void init() {
-        //EntityManager em = emf.createEntityManager();
 
-        //em.createQuery("delete from Cat c where c.id>0").executeUpdate();
+        Employee e1 = new Employee("Ivanov", "Ivan", "Ivanovich", "Tester");
+        em.persist(e1);
+        Employee e2 = new Employee("Gavrilov", "Oleg", "Vladimirovich", "Analytic");
+        em.persist(e2);
+        Employee e3 = new Employee("Utkin", "Vasiliy", "Alekseevich", "Developer");
+        em.persist(e3);
+
+        Department d1 = new Department("Filenet", "601");
+        em.persist(d1);
+        Department d2 = new Department("SPO", "603");
+        em.persist(d2);
+
         
-        Cat c;
-        //em.getTransaction().begin();
-        //em.createQuery("delete from Cat c where c.id>0").executeUpdate();
 
-        Person p1 = new Person("Ivan");
+
+
+        /*Person p1 = new Person("Ivan");
         em.persist(p1);
         Person p2 = new Person("Andrey");
         em.persist(p2);
@@ -88,9 +99,8 @@ public class HiberDAO {
         c1.setOwner(p3);
         p2.getCats().add(c4);
         c4.setOwner(p2);
-        
-        //em.getTransaction().commit();
-        lastStatus = "Кошки построены!";
+
+        lastStatus = "Кошки построены!";*/
         
         
     }
