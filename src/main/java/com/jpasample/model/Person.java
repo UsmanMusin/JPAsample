@@ -26,7 +26,7 @@ public class Person {
         //cats.add(new Cat("?",1f, this));
     }
 
-    @OneToMany(mappedBy="owner",cascade={CascadeType.PERSIST}, orphanRemoval=true,fetch = FetchType.LAZY)
+    @OneToMany(mappedBy="owner",cascade={CascadeType.PERSIST}, orphanRemoval=true,fetch = FetchType.EAGER)
     // НОВЫХ элементов в БД обратная сторона связи не добавляет!
     //@OneToMany // осторожно - это независимая связь, а не другой конец @ManyToOne! порождает доп. таблицу
     //   private Set<Cat> cats = new HashSet<Cat>(); // без номера и порядка!

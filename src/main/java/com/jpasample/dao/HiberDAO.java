@@ -64,7 +64,7 @@ public class HiberDAO {
     @Transactional
     public void init() {
 
-        Employee e1 = new Employee("Ivanov", "Ivan", "Ivanovich", "Tester");
+        /*Employee e1 = new Employee("Ivanov", "Ivan", "Ivanovich", "Tester");
         em.persist(e1);
         Employee e2 = new Employee("Gavrilov", "Oleg", "Vladimirovich", "Analytic");
         em.persist(e2);
@@ -74,13 +74,13 @@ public class HiberDAO {
         Department d1 = new Department("Filenet", "601");
         em.persist(d1);
         Department d2 = new Department("SPO", "603");
-        em.persist(d2);
+        em.persist(d2);*/
 
         
 
 
 
-        /*Person p1 = new Person("Ivan");
+        Person p1 = new Person("Ivan");
         em.persist(p1);
         Person p2 = new Person("Andrey");
         em.persist(p2);
@@ -100,7 +100,7 @@ public class HiberDAO {
         p2.getCats().add(c4);
         c4.setOwner(p2);
 
-        lastStatus = "Кошки построены!";*/
+        lastStatus = "Кошки построены!";
         
         
     }
