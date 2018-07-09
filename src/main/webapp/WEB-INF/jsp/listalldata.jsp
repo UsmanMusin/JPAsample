@@ -64,6 +64,28 @@
             </tr>
         </c:forEach>
         <tbody></table>
+
+        <h1>Сотрудники:</h1>
+        <table><tbody>
+        <tr>
+            <td>emp_id</td>
+            <td>name</td>
+            <td>middlename</td>
+            <td>surname</td>
+            <td>position</td>
+            <td>department</td>
+        </tr>
+        <c:forEach var="x" items="${employees}">
+        <tr>
+            <td>${x.id}</td>
+            <td>${x.name}</td>
+            <td>${x.middleName}</td>
+            <td>${x.surname}</td>
+            <td>${x.position}</td>
+            <td>${x.department}</td>
+        </tr>
+        </c:forEach>
+            <tbody></table>
         
         <div class="status">${status}</div>
     </body>

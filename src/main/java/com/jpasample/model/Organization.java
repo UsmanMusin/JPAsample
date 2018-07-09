@@ -15,7 +15,7 @@ public class Organization {
     @OneToOne
     private Employee manager;
 
-    @OneToMany
+    @OneToMany(cascade={CascadeType.PERSIST}, orphanRemoval=true,fetch = FetchType.EAGER)
     private Set<Department> departmentSet;
 
     private String name;
@@ -25,9 +25,7 @@ public class Organization {
     public Organization() {
     }
 
-    public Organization(Employee manager, Set<Department> departmentSet, String name, String legalAddress, String physicalAddress) {
-        this.manager = manager;
-        this.departmentSet = departmentSet;
+    public Organization(String name, String legalAddress, String physicalAddress) {
         this.name = name;
         this.legalAddress = legalAddress;
         this.physicalAddress = physicalAddress;
@@ -79,6 +77,10 @@ public class Organization {
 
     public void setDepartmentSet(Set<Department> departmentSet) {
         this.departmentSet = departmentSet;
+    }
+
+    public void addDepartment(Department department){
+        departmentSet.add(department);
     }
 
     @Override

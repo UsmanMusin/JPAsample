@@ -1,8 +1,6 @@
 package com.jpasample.dao;
-import com.jpasample.model.Cat;
-import com.jpasample.model.Department;
-import com.jpasample.model.Employee;
-import com.jpasample.model.Person;
+import com.jpasample.model.*;
+
 import java.util.List;
 import java.util.Random;
 import javax.persistence.EntityManager;
@@ -18,9 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 
 @Repository
 public class HiberDAO {
-    
-    //@Autowired
-    //EntityManagerFactory emf;
+
     @PersistenceContext(type = PersistenceContextType.TRANSACTION)
     private EntityManager em;
     
@@ -33,48 +29,65 @@ public class HiberDAO {
 
     @Transactional
     public Cat addRandomCat() {
-        //EntityManager em = emf.createEntityManager();
-        
         Cat c = new Cat();
-        //em.getTransaction().begin();
         c.setName("Cat"+r.nextInt(100));
         c.setWeight(1.0f+r.nextInt(40)/10.0f);
         em.persist(c);
-        //em.getTransaction().commit();
         lastStatus = "Кошка добавлена!";
         return c;
     }
 
-    //@Transactional
     public List<Cat> getAllCats() {
-        //EntityManager em = emf.createEntityManager();
         List<Cat> res = em.createQuery("select c from Cat c",Cat.class).getResultList();
-        
         return res;
     }
 
-    //@Transactional
     public List<Person> getAllPersons() {
-        //EntityManager em = emf.createEntityManager();
         List<Person> res = em.createQuery("select p from Person p",Person.class).getResultList();
-        
+        return res;
+    }
+
+    public List<Employee> getAllEmployees(){
+        List<Employee> res = em.createQuery("select  e from Employee e",Employee.class).getResultList();
+        return res;
+    }
+
+    public List<Department> getAllDepartments(){
+        List<Department> res = em.createQuery("select  d from Department d",Department.class).getResultList();
+        return res;
+    }
+
+    public List<Organization> getAllOrganizations(){
+        List<Organization> res = em.createQuery("select  o from Organization o",Organization.class).getResultList();
         return res;
     }
 
     @Transactional
     public void init() {
 
-        /*Employee e1 = new Employee("Ivanov", "Ivan", "Ivanovich", "Tester");
+        Employee e1 = new Employee("Ivanov", "Ivan", "Ivanovich", "Tester");
         em.persist(e1);
         Employee e2 = new Employee("Gavrilov", "Oleg", "Vladimirovich", "Analytic");
         em.persist(e2);
         Employee e3 = new Employee("Utkin", "Vasiliy", "Alekseevich", "Developer");
         em.persist(e3);
+        Employee e4 = new Employee("Petuhov", "Alexander", "Sergeevich", "System Administrator");
+        em.persist(e4);
 
         Department d1 = new Department("Filenet", "601");
         em.persist(d1);
         Department d2 = new Department("SPO", "603");
-        em.persist(d2);*/
+        em.persist(d2);
+
+        Organization o1 = new Organization("Datatech","Ufa","Ufa");
+        o1.setManager(e1);
+        //o1.getDepartmentSet().add(d1);
+        //o1.getDepartmentSet().add(d2);
+        d1.setManager(e1);
+        //d1.addEmployee(e2);
+        d2.setManager(e3);
+        //d2.addEmployee(e4);
+        e1.setDepartment(d1);
 
         
 
@@ -101,19 +114,13 @@ public class HiberDAO {
         c4.setOwner(p2);
 
         lastStatus = "Кошки построены!";
-        
-        
     }
 
-    /// проблема с многопоточным доступом!
-    //@Transactional
     public String pullStatus() {
         return lastStatus;
     }
 
-    //@Transactional
     public Cat getCatById(long id) {
-        //EntityManager em = emf.createEntityManager();
         Cat c;
         c = em.find(Cat.class, id);
         return c;
@@ -121,9 +128,6 @@ public class HiberDAO {
 
     @Transactional
     public void deleteCat(long id) {
-        //EntityManager em = emf.createEntityManager();
-        //em.getTransaction().begin();
-        //em.clear();
         Cat c = em.find(Cat.class, id);
         if(c!=null) {
            /* if (c.getOwner()!=null) {
@@ -132,26 +136,19 @@ public class HiberDAO {
             c.setOwner(null);*/
             em.remove(c);
         }
-        //em.getTransaction().commit();
     }
 
     @Transactional
     public void deletePerson(long idPerson) {
-        //EntityManager em = emf.createEntityManager();
-        //em.getTransaction().begin();
         Person p;
-        //em.createQuery("delete from Person p where p.id=?").setParameter(1,idPerson).executeUpdate();
         p = em.find(Person.class, idPerson);
         if(p != null){
             em.remove(p);
         }
-        //em.getTransaction().commit();
     }
 
     @Transactional
     public void changeOwner(long cid, long pid) {
-        //EntityManager em = emf.createEntityManager();
-        //em.getTransaction().begin();
         Cat c = em.find(Cat.class, cid);
         Person newOwner = em.find(Person.class, pid);
         if(c!=null && newOwner!=null) {
@@ -165,7 +162,6 @@ public class HiberDAO {
                 }
             }
         }
-        //em.getTransaction().commit();
     }
   
 }

@@ -33,6 +33,9 @@ public class MainController {
         List<Cat> allCats = dao.getAllCats();
         mv.addObject("cats", allCats);
         mv.addObject("persons", dao.getAllPersons());
+        mv.addObject("employees",dao.getAllEmployees());
+        mv.addObject("departments",dao.getAllDepartments());
+        mv.addObject("organizations",dao.getAllOrganizations());
         log.info(allCats.toString());
         return mv;              
     }

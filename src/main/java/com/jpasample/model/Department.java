@@ -69,9 +69,12 @@ public class Department {
         this.employeeSet = employeeSet;
     }
 
+    public void addEmployee(Employee employee){
+        employeeSet.add(employee);
+    }
+
     @Override
     public String toString(){
-        return "\nDepartment:\n" + "name: " + name + "\ncontacts:" + contacts +
-                "\nmanager: " + manager;
+        return name;
     }
 }
