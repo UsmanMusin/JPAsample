@@ -76,7 +76,10 @@ public class Organization {
     }
 
     public void setDepartmentSet(Set<Department> departmentSet) {
-        this.departmentSet = departmentSet;
+        if(this.departmentSet != null){
+            this.departmentSet.addAll(departmentSet);
+        }
+        else this.departmentSet = departmentSet;
     }
 
     public void addDepartment(Department department){

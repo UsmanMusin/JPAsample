@@ -18,7 +18,7 @@ public class Department {
     @OneToOne
     private Employee manager;
 
-    @OneToMany
+    @OneToMany(cascade={CascadeType.PERSIST}, orphanRemoval=true,fetch = FetchType.EAGER)
     private Set<Employee> employeeSet;
 
     public Department() {

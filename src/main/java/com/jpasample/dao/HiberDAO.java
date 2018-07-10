@@ -1,8 +1,10 @@
 package com.jpasample.dao;
 import com.jpasample.model.*;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
@@ -81,7 +83,11 @@ public class HiberDAO {
 
         Organization o1 = new Organization("Datatech","Ufa","Ufa");
         o1.setManager(e1);
-        //o1.getDepartmentSet().add(d1);
+        Set<Department> depset = new HashSet<Department>();
+        depset.add(d1);
+        depset.add(d2);
+        o1.setDepartmentSet(depset);
+//        o1.getDepartmentSet().add(d1);
         //o1.getDepartmentSet().add(d2);
         d1.setManager(e1);
         //d1.addEmployee(e2);
@@ -89,7 +95,7 @@ public class HiberDAO {
         //d2.addEmployee(e4);
         e1.setDepartment(d1);
 
-        
+
 
 
 
