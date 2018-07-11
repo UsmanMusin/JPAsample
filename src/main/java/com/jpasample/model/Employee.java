@@ -95,8 +95,6 @@ public class Employee {
 
     @Override
     public String toString(){
-        return "\nEmployee:\n" + "name: " + name + "\nsurname:" + surname +
-                "\nmiddlename: " + middleName + "\nposition: " + position;
-//                "\ndepartment: " + department;
+        return name;
     }
 }

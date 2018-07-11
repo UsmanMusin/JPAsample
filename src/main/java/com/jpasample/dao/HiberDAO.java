@@ -60,7 +60,7 @@ public class HiberDAO {
     }
 
     public List<Organization> getAllOrganizations(){
-        List<Organization> res = em.createQuery("select  o from Organization o",Organization.class).getResultList();
+        List<Organization> res = em.createQuery("select o from Organization o",Organization.class).getResultList();
         return res;
     }
 
@@ -82,6 +82,7 @@ public class HiberDAO {
         em.persist(d2);
 
         Organization o1 = new Organization("Datatech","Ufa","Ufa");
+        em.persist(o1);
         o1.setManager(e1);
         Set<Department> depset = new HashSet<Department>();
         depset.add(d1);

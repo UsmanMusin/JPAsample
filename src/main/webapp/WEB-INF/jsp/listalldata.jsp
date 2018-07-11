@@ -106,6 +106,28 @@
         </tr>
         </c:forEach>
             <tbody></table>
+
+        <h1>Организации:</h1>
+        <table><tbody>
+        <tr>
+            <td>org_id</td>
+            <td>name</td>
+            <td>legalAddress</td>
+            <td>physicalAddress</td>
+            <td>manager</td>
+            <td>departmentSet</td>
+        </tr>
+        <c:forEach var="x" items="${organizations}">
+        <tr>
+            <td>${x.id}</td>
+            <td>${x.name}</td>
+            <td>${x.legalAddress}</td>
+            <td>${x.physicalAddress}</td>
+            <td>${x.manager}</td>
+            <td>${x.departmentSet}</td>
+        </tr>
+        </c:forEach>
+            <tbody></table>
         
         <div class="status">${status}</div>
     </body>
