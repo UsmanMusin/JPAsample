@@ -15,12 +15,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @Controller
+@SessionAttributes("user")
 public class MainController {
     
     Logger log = LoggerFactory.getLogger(this.getClass());
@@ -28,14 +30,15 @@ public class MainController {
     @Autowired
     HiberDAO dao;
     
-    @ModelAttribute("status")
+    @ModelAttribute("user")
     public String getStatus() {
-        return dao.pullStatus();
+        return "infinity";
     }
     
-    @RequestMapping(value = "list.do", method = RequestMethod.GET)
-    public ModelAndView showAll() {
+    @RequestMapping("list.do")
+    public ModelAndView showAll(@ModelAttribute String user) {
         ModelAndView mv = new ModelAndView("listalldata");
+        mv.addObject(user);
         List<Cat> allCats = dao.getAllCats();
         mv.addObject("cats", allCats);
         mv.addObject("persons", dao.getAllPersons());

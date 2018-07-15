@@ -88,7 +88,6 @@ public class Organization {
 
     @Override
     public String toString(){
-        return "\nOrganization:\n" + "name: " + name + "\nmanager:" + manager +
-                "\nlegalAddress: " + legalAddress + "\nphysicalAddress: " + physicalAddress;
+        return name;
     }
 }
