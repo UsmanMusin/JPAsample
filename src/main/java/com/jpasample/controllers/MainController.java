@@ -2,24 +2,14 @@
 package com.jpasample.controllers;
 
 import com.jpasample.dao.HiberDAO;
-import com.jpasample.model.Cat;
-import java.util.Collections;
-import java.util.List;
 
-import com.jpasample.model.Employee;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 @Controller
 @SessionAttributes("user")
@@ -29,74 +19,47 @@ public class MainController {
     
     @Autowired
     HiberDAO dao;
-    
-    @ModelAttribute("user")
-    public String getStatus() {
-        return "infinity";
-    }
-    
-    @RequestMapping("list.do")
-    public ModelAndView showAll(@ModelAttribute String user) {
-        ModelAndView mv = new ModelAndView("listalldata");
-        mv.addObject(user);
-        List<Cat> allCats = dao.getAllCats();
-        mv.addObject("cats", allCats);
-        mv.addObject("persons", dao.getAllPersons());
+
+    @RequestMapping("admin.do")
+    public ModelAndView adminPage(String user) {
+        ModelAndView mv = new ModelAndView("adminpanel");
         mv.addObject("employees",dao.getAllEmployees());
         mv.addObject("departments",dao.getAllDepartments());
         mv.addObject("organizations",dao.getAllOrganizations());
-        log.info(allCats.toString());
-        return mv;              
-    }
-    
-    @RequestMapping("showCat.do")
-    public ModelAndView showOne(long id) {
-        ModelAndView mv = new ModelAndView("listalldata");
-        Cat c = dao.getCatById(id);
-        mv.addObject("cats", Collections.singletonList(c));
         return mv;              
     }
 
-    @RequestMapping("deleteCat.do")
-    public ModelAndView deleteOne(long id) {
-        ModelAndView mv = new ModelAndView("listalldata");
-        dao.deleteCat(id);
-        //mv.addObject("cats", Collections.singletonList(c));
+    @RequestMapping("userpage.do")
+    public ModelAndView userPage(String user) {
+        ModelAndView mv = new ModelAndView("adminpanel");
+        mv.addObject("user",user);
+        /*mv.addObject("employees",dao.getAllEmployees());
+        mv.addObject("departments",dao.getAllDepartments());
+        mv.addObject("organizations",dao.getAllOrganizations());*/
         return mv;
     }
 
-    @RequestMapping("deletePerson.do")
-    public ModelAndView deletePerson(long id) {
-        ModelAndView mv = new ModelAndView("listalldata");
-        dao.deletePerson(id);
-        //mv.addObject("cats", Collections.singletonList(c));
-        return mv;
+    @RequestMapping(value = "check.do", method = RequestMethod.POST)
+    public ModelAndView checkuser(@RequestParam String user) {
+        if(dao.userCheck(user)){
+            return userPage(user);
+        }
+        else {
+            ModelAndView mv = new ModelAndView("login");
+            mv.addObject("error","Такого пользователя не существует");
+            return mv;
+        }
     }
 
-    @RequestMapping("changeOwner.do")
-    public ModelAndView changeOwner(long cid, long pid) {
-        ModelAndView mv = new ModelAndView("listalldata");
-        dao.changeOwner(cid, pid);
-        //mv.addObject("cats", Collections.singletonList(c));
-        return mv;
-    }
 
-    @RequestMapping("init.do")
-    public String init() {
+
+
+
+    @RequestMapping("start.do")
+    public ModelAndView start() {
         dao.init();
-        return "redirect:list.do";
+        ModelAndView mv = new ModelAndView("login");
+        return mv;
     }
-    
-    @RequestMapping("addcat.do")
-    public ModelAndView addCat() {
-        dao.addRandomCat();
-        return showAll();             
-    }
-    
-    
 
-    
-    
-    
-    
 }
