@@ -9,8 +9,9 @@
     <link href="<c:url value='/main.css'/>" rel="stylesheet" type="text/css">
 </head>
 <body>
-    <li><a href="admin.do"/>Администрирование</a></li>
-        <form action="list.do" method="post">  <input type="submit" value="Войти под пользователем: "/> <input name="user"/> </form>
+You are now logged as ${user} <br/>
+<a href="admin.do"/>Администрирование</a>
+        <form action="check.do" method="post">  <input type="submit" value="Войти под пользователем: "/> <input name="user"/> </form>
         <div class="status">${error}</div>
 
 </body>

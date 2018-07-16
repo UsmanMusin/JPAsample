@@ -9,7 +9,6 @@
     <link href="<c:url value='/main.css'/>" rel="stylesheet" type="text/css">
 </head>
 <body>
-<form action="list.do" method="post">  <input type="submit" value="Войти под пользователем: "/> <input name="user"/> </form>
 <div class="status">${user}</div>
 
 </body>

@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 
 
 @Repository
-public class HiberDAO {
+public class HiberDAO implements DAO {
 
     @PersistenceContext(type = PersistenceContextType.TRANSACTION)
     private EntityManager em;
@@ -25,21 +25,25 @@ public class HiberDAO {
     public HiberDAO() {
     }
 
+    @Override
     public List<Employee> getAllEmployees(){
         List<Employee> res = em.createQuery("select  e from Employee e",Employee.class).getResultList();
         return res;
     }
 
+    @Override
     public List<Department> getAllDepartments(){
         List<Department> res = em.createQuery("select  d from Department d",Department.class).getResultList();
         return res;
     }
 
+    @Override
     public List<Organization> getAllOrganizations(){
         List<Organization> res = em.createQuery("select o from Organization o",Organization.class).getResultList();
         return res;
     }
 
+    @Override
     @Transactional
     public void init() {
 
@@ -73,12 +77,18 @@ public class HiberDAO {
         e1.setDepartment(d1);
     }
 
+    @Override
     public boolean userCheck(String user){
-        List<Employee> res = em.createQuery("FROM Employee E WHERE E.name = " + user,Employee.class).getResultList();
-        if(res != null){
-            return true;
+        //List<Employee> res = em.createQuery("FROM Employee E WHERE E.name = " + user,Employee.class).getResultList();
+        List<Employee> res = em.createQuery("select  e from Employee e",Employee.class).getResultList();
+        boolean b = false;
+        for (Employee e: res) {
+            if(e.getName().equals(user)){
+                b = true;
+                break;
+            }
         }
-        else return false;
+        return b;
     }
 
 
