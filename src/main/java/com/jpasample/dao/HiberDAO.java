@@ -45,50 +45,63 @@ public class HiberDAO implements DAO {
 
     @Override
     @Transactional
-    public void init() {
+    public void init(){
+        List<Organization> res = em.createQuery("select o from Organization o",Organization.class).getResultList();
+        if(res.isEmpty()) {
+            Employee e1 = new Employee("Ivanov", "Ivan", "Ivanovich", "Tester", "123");
+            em.persist(e1);
+            Employee e2 = new Employee("Gavrilov", "Oleg", "Vladimirovich", "Analytic", "123");
+            em.persist(e2);
+            Employee e3 = new Employee("Utkin", "Vasiliy", "Alekseevich", "Developer", "123");
+            em.persist(e3);
+            Employee e4 = new Employee("Petuhov", "Alexander", "Sergeevich", "System Administrator", "123");
+            em.persist(e4);
 
-        Employee e1 = new Employee("Ivanov", "Ivan", "Ivanovich", "Tester");
-        em.persist(e1);
-        Employee e2 = new Employee("Gavrilov", "Oleg", "Vladimirovich", "Analytic");
-        em.persist(e2);
-        Employee e3 = new Employee("Utkin", "Vasiliy", "Alekseevich", "Developer");
-        em.persist(e3);
-        Employee e4 = new Employee("Petuhov", "Alexander", "Sergeevich", "System Administrator");
-        em.persist(e4);
+            Department d1 = new Department("Filenet", "601");
+            em.persist(d1);
+            Department d2 = new Department("SPO", "603");
+            em.persist(d2);
 
-        Department d1 = new Department("Filenet", "601");
-        em.persist(d1);
-        Department d2 = new Department("SPO", "603");
-        em.persist(d2);
-
-        Organization o1 = new Organization("Datatech","Ufa","Ufa");
-        em.persist(o1);
-        o1.setManager(e1);
-        Set<Department> depset = new HashSet<Department>();
-        depset.add(d1);
-        depset.add(d2);
-        o1.setDepartmentSet(depset);
-//        o1.getDepartmentSet().add(d1);
-        //o1.getDepartmentSet().add(d2);
-        d1.setManager(e1);
-        //d1.addEmployee(e2);
-        d2.setManager(e3);
-        //d2.addEmployee(e4);
-        e1.setDepartment(d1);
+            Organization o1 = new Organization("Datatech", "Ufa", "Ufa");
+            em.persist(o1);
+            o1.setManager(e1);
+            Set<Department> depset = new HashSet<Department>();
+            depset.add(d1);
+            depset.add(d2);
+            o1.setDepartmentSet(depset);
+//         o1.getDepartmentSet().add(d1);
+            //o1.getDepartmentSet().add(d2);
+            d1.setManager(e1);
+            //d1.addEmployee(e2);
+            d2.setManager(e3);
+            //d2.addEmployee(e4);
+            e1.setDepartment(d1);
+        }
     }
 
+
     @Override
-    public boolean userCheck(String user){
+    public boolean userCheck(String user, String pass){
         //List<Employee> res = em.createQuery("FROM Employee E WHERE E.name = " + user,Employee.class).getResultList();
         List<Employee> res = em.createQuery("select  e from Employee e",Employee.class).getResultList();
         boolean b = false;
         for (Employee e: res) {
-            if(e.getName().equals(user)){
+            if((e.getName().equals(user)) && (e.getPassword().equals(pass))){
                 b = true;
                 break;
             }
         }
         return b;
+    }
+
+    @Override
+    @Transactional
+    public void deleteEmp(long id) {
+        Employee emp;
+        emp = em.find(Employee.class, id);
+        if(emp != null){
+            em.remove(emp);
+        }
     }
 
 

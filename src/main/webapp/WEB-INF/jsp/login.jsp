@@ -9,7 +9,9 @@
     <link href="<c:url value='/main.css'/>" rel="stylesheet" type="text/css">
 </head>
 <body>
-<a class="adminButton" href="admin.do"/>Администрирование</a>
+<a class="adminButton" href="admin.do"/>Администрирование</a><br>
+<a class="adminButton" href="init.do"/>Заполнить базу</a>&nbsp&nbsp${initmsg}
+
 <div align="center">
 <form class="form-container" action="check.do" method="post">
     <div class="form-title"><h2>Авторизация</h2></div>
@@ -19,10 +21,11 @@
     <input class="form-field" type="text" name="pass" /><br />
     <div class="submit-container">
         <input class="submit-button" type="submit" value="Войти" />
+        <div class="status">${error}</div>
     </div>
 </form>
 </div>
-        <div class="status">${error}</div>
+
 
 </body>
 </html>

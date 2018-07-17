@@ -17,5 +17,7 @@ public interface DAO {
     @Transactional
     void init();
 
-    boolean userCheck(String user);
+    boolean userCheck(String user, String pass);
+
+    void deleteEmp(long id);
 }

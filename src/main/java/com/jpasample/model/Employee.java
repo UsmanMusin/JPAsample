@@ -16,6 +16,7 @@ public class Employee {
     private String surname;
     private String middleName;
     private String position;
+    private String password;
 
     @ManyToOne
     private Department department;
@@ -28,11 +29,12 @@ public class Employee {
     public Employee() {
     }
 
-    public Employee(String name, String surname, String middleName, String position) {
+    public Employee(String name, String surname, String middleName, String position, String password) {
         this.name = name;
         this.surname = surname;
         this.middleName = middleName;
         this.position = position;
+        this.password = password;
         //this.department = department;
         //this.assignmentSet = assignmentSet;
     }
@@ -93,8 +95,17 @@ public class Employee {
         this.assignmentSet = assignmentSet;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     @Override
     public String toString(){
         return name;
     }
+
 }

@@ -24,7 +24,7 @@ public class MainController {
 
 
     @RequestMapping("admin.do")
-    public ModelAndView adminPage(String user) {
+    public ModelAndView adminPage() {
         ModelAndView mv = new ModelAndView("adminpanel");
         mv.addObject("employees",dao.getAllEmployees());
         mv.addObject("departments",dao.getAllDepartments());
@@ -45,25 +45,42 @@ public class MainController {
     }
 
     @RequestMapping(value = "check.do", method = RequestMethod.POST)
-    public ModelAndView checkuser(@RequestParam String user) {
-        if(dao.userCheck(user)){
+    public ModelAndView checkuser(@RequestParam String user, String pass) {
+        if(dao.userCheck(user,pass)){
             ModelAndView mv = new ModelAndView("redirect:userpage.do");
             mv.addObject("user",user);
             return mv;
         }
         else {
             ModelAndView mv = new ModelAndView("login");
-            mv.addObject("error","Такого пользователя не существует");
+            mv.addObject("error","Неверный логин или пароль");
             return mv;
         }
+    }
+
+    @RequestMapping("init.do")
+    public ModelAndView init(){
+        dao.init();
+        ModelAndView mv = new ModelAndView("login");
+        mv.addObject("initmsg","Данные внесены в базу");
+        return mv;
     }
 
 
 
     @RequestMapping("start.do")
     public ModelAndView start() {
-        dao.init();
         ModelAndView mv = new ModelAndView("login");
+        return mv;
+    }
+
+    @RequestMapping("deleteEmp{id}.do")
+    public ModelAndView deleteEmp(@PathVariable("id") long id) {
+        dao.deleteEmp(id);
+        ModelAndView mv = new ModelAndView("redirect:admin.do");
+        /*mv.addObject("employees",dao.getAllEmployees());
+        mv.addObject("departments",dao.getAllDepartments());
+        mv.addObject("organizations",dao.getAllOrganizations());*/
         return mv;
     }
  

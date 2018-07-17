@@ -11,8 +11,8 @@
     <body>
         
 
-        <h1>Сотрудники:</h1>
-        <table><tbody>
+        <h1 id="demoFont">Сотрудники:</h1>
+        <table class="blueTable"><tbody>
         <tr>
             <td>emp_id</td>
             <td>name</td>
@@ -29,12 +29,14 @@
             <td>${x.surname}</td>
             <td>${x.position}</td>
             <td>${x.department}</td>
+            <td><a class="adminButton" href="deleteEmp${x.id}.do"/>Удалить</a>    </td>
+
         </tr>
         </c:forEach>
             <tbody></table>
 
-        <h1>Подразделения:</h1>
-        <table><tbody>
+        <h1 id="demoFont">Подразделения:</h1>
+        <table class="blueTable"><tbody>
         <tr>
             <td>dep_id</td>
             <td>name</td>
@@ -53,8 +55,8 @@
         </c:forEach>
             <tbody></table>
 
-        <h1>Организации:</h1>
-        <table><tbody>
+        <h1 id="demoFont">Организации:</h1>
+        <table class="blueTable"><tbody>
         <tr>
             <td>org_id</td>
             <td>name</td>
