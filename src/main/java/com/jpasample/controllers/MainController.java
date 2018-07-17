@@ -37,7 +37,7 @@ public class MainController {
        // ModelAndView mv = new ModelAndView("adminpanel");
        // mv.addObject("user",user);
         m.addAttribute("message","Hello");
-        m.asMap().put("user", "Petrov");
+        //m.asMap().put("user", "Petrov");
         /*mv.addObject("employees",dao.getAllEmployees());
         mv.addObject("departments",dao.getAllDepartments());
         mv.addObject("organizations",dao.getAllOrganizations());*/
@@ -66,5 +66,5 @@ public class MainController {
         ModelAndView mv = new ModelAndView("login");
         return mv;
     }
-
+ 
 }

@@ -9,10 +9,22 @@
     <link href="<c:url value='/main.css'/>" rel="stylesheet" type="text/css">
 </head>
 <body>
-You are now logged as ${user} <br/>
-<a href="admin.do"/>Администрирование</a>
-        <form action="check.do" method="post">  <input type="submit" value="Войти под пользователем: "/> <input name="user"/> </form>
+<a class="adminButton" href="admin.do"/>Администрирование</a>
+<div align="center">
+<form class="form-container" action="check.do" method="post">
+    <div class="form-title"><h2>Авторизация</h2></div>
+    <div class="form-title">Ваше Имя</div>
+    <input class="form-field" type="text" name="user" /><br />
+    <div class="form-title">Пароль</div>
+    <input class="form-field" type="text" name="pass" /><br />
+    <div class="submit-container">
+        <input class="submit-button" type="submit" value="Войти" />
+    </div>
+</form>
+</div>
         <div class="status">${error}</div>
 
 </body>
 </html>
+
+
