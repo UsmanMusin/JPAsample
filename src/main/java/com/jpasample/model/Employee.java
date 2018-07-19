@@ -18,12 +18,7 @@ public class Employee {
     private String position;
     private String password;
 
-    @ManyToOne
-    private Department department;
-
-
-
-    @ManyToMany(mappedBy = "executors")
+    @OneToMany(mappedBy = "executor")
     private Set<Assignment> assignmentSet;
 
     public Employee() {
@@ -59,10 +54,6 @@ public class Employee {
         return position;
     }
 
-    public Department getDepartment() {
-       return department;
-    }
-
     public void setId(long id) {
         this.emp_id = id;
     }
@@ -81,10 +72,6 @@ public class Employee {
 
     public void setPosition(String position) {
         this.position = position;
-    }
-
-    public void setDepartment(Department department) {
-        this.department = department;
     }
 
     public Set<Assignment> getAssignmentSet() {

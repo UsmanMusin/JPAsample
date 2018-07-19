@@ -17,31 +17,23 @@ public class Assignment {
     @ManyToOne
     private Employee author;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "assigments_employees",
-            joinColumns = { @JoinColumn(name = "as_id") },
-            inverseJoinColumns = { @JoinColumn(name = "emp_id") })
-    private Set<Employee> executors;
-
+    @ManyToOne
+    private Employee executor;
 
     private int time;
-    private boolean control;
     private String text;
     private boolean execution;
-    private String status;
 
     public Assignment() {
     }
 
-    public Assignment(String theme, Employee author, Set<Employee> executors, int time, boolean control, String text, boolean execution, String status) {
+    public Assignment(String theme, Employee author, Employee executor, int time, String text, boolean execution, String status) {
         this.theme = theme;
         this.author = author;
-        this.executors = executors;
+        this.executor = executor;
         this.time = time;
-        this.control = control;
         this.text = text;
         this.execution = execution;
-        this.status = status;
     }
 
     public long getId() {
@@ -68,12 +60,12 @@ public class Assignment {
         this.author = author;
     }
 
-    public Set<Employee> getExecutors() {
-        return executors;
+    public Employee getExecutor() {
+        return executor;
     }
 
-    public void setExecutors(Set<Employee> executors) {
-        this.executors = executors;
+    public void setExecutor(Employee executor) {
+        this.executor = executor;
     }
 
     public int getTime() {
@@ -82,14 +74,6 @@ public class Assignment {
 
     public void setTime(int time) {
         this.time = time;
-    }
-
-    public boolean isControl() {
-        return control;
-    }
-
-    public void setControl(boolean control) {
-        this.control = control;
     }
 
     public String getText() {
@@ -108,18 +92,8 @@ public class Assignment {
         this.execution = execution;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
     @Override
     public String toString(){
-        return "\nAssignment:\n" + "theme: " + theme + "\nauthor:" + author +
-                "\nexecutors: " + executors + "\ntime: " + time + "\ncontrol: " + control +
-                "\ntext: " + text + "\nexecution: " + execution + "\nstatus: " + status;
+        return theme;
     }
 }

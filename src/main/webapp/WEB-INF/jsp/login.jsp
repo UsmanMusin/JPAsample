@@ -18,7 +18,7 @@
     <div class="form-title">Ваше Имя</div>
     <input class="form-field" type="text" name="user" /><br />
     <div class="form-title">Пароль</div>
-    <input class="form-field" type="text" name="pass" /><br />
+    <input class="form-field" type="password" name="pass" /><br />
     <div class="submit-container">
         <input class="submit-button" type="submit" value="Войти" />
         <div class="status">${error}</div>

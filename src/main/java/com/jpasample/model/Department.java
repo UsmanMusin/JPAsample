@@ -15,7 +15,7 @@ public class Department {
     private String name;
     private String contacts;
 
-    @OneToOne
+    @ManyToOne()
     private Employee manager;
 
     @OneToMany(cascade={CascadeType.PERSIST}, orphanRemoval=true,fetch = FetchType.EAGER)

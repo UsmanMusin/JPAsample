@@ -1,5 +1,6 @@
 package com.jpasample.dao;
 
+import com.jpasample.model.Assignment;
 import com.jpasample.model.Department;
 import com.jpasample.model.Employee;
 import com.jpasample.model.Organization;
@@ -14,10 +15,31 @@ public interface DAO {
 
     List<Organization> getAllOrganizations();
 
+    List<Assignment> getAllAssignments();
+
+    List<Assignment> getMyAssignments(long id);
+
+    List<Assignment> getForMeAssignments(long id);
+
+    List<Assignment> getForMeDoneAssignments(long id);
+
+
     @Transactional
     void init();
 
-    boolean userCheck(String user, String pass);
+    long userCheck(String user, String pass);
 
     void deleteEmp(long id);
+
+    Employee getEmpById(long id);
+
+    void updateEmp(Employee employee);
+
+    void addEmp(Employee employee);
+
+    void addAssign(Assignment assignment);
+
+    Assignment getAssignById(long id);
+
+    void executeAssignById(long id);
 }

@@ -12,7 +12,7 @@ public class Organization {
     @Column(name = "org_id")
     private long org_id;
 
-    @ManyToOne
+    @ManyToOne()
     private Employee manager;
 
     @OneToMany(cascade={CascadeType.PERSIST}, orphanRemoval=true,fetch = FetchType.EAGER)

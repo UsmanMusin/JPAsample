@@ -44,6 +44,39 @@ public class HiberDAO implements DAO {
     }
 
     @Override
+    public List<Assignment> getAllAssignments(){
+        List<Assignment> res = em.createQuery("select a from Assignment a",Assignment.class).getResultList();
+        return res;
+    }
+
+    @Override
+    public List<Assignment> getMyAssignments(long id){
+        List<Assignment> res = em.createQuery(
+                "select a from Assignment a where author.id = ?1", Assignment.class)
+                .setParameter(1, id)
+                .getResultList();
+        return res;
+    }
+
+    @Override
+    public List<Assignment> getForMeAssignments(long id){
+        List<Assignment> res = em.createQuery(
+                "select a from Assignment a where executor.id = ?1 and execution = false", Assignment.class)
+                .setParameter(1, id)
+                .getResultList();
+        return res;
+    }
+
+    @Override
+    public List<Assignment> getForMeDoneAssignments(long id){
+        List<Assignment> res = em.createQuery(
+                "select a from Assignment a where executor.id = ?1 and execution = true", Assignment.class)
+                .setParameter(1, id)
+                .getResultList();
+        return res;
+    }
+
+    @Override
     @Transactional
     public void init(){
         List<Organization> res = em.createQuery("select o from Organization o",Organization.class).getResultList();
@@ -64,30 +97,34 @@ public class HiberDAO implements DAO {
 
             Organization o1 = new Organization("Datatech", "Ufa", "Ufa");
             em.persist(o1);
-            o1.setManager(e1);
+            //o1.setManager(e1);
             Set<Department> depset = new HashSet<Department>();
+            Set<Employee> empset = new HashSet<>();
             depset.add(d1);
             depset.add(d2);
+            empset.add(e1);
+            empset.add(e3);
             o1.setDepartmentSet(depset);
+            d1.setEmployeeSet(empset);
 //         o1.getDepartmentSet().add(d1);
             //o1.getDepartmentSet().add(d2);
-            d1.setManager(e1);
+            //d1.setManager(e1);
             //d1.addEmployee(e2);
-            d2.setManager(e3);
+            //d2.setManager(e3);
             //d2.addEmployee(e4);
-            e1.setDepartment(d1);
+            //e1.setDepartment(d1);
         }
     }
 
 
     @Override
-    public boolean userCheck(String user, String pass){
+    public long userCheck(String user, String pass){
         //List<Employee> res = em.createQuery("FROM Employee E WHERE E.name = " + user,Employee.class).getResultList();
         List<Employee> res = em.createQuery("select  e from Employee e",Employee.class).getResultList();
-        boolean b = false;
+        long b = 0;
         for (Employee e: res) {
             if((e.getName().equals(user)) && (e.getPassword().equals(pass))){
-                b = true;
+                b = e.getId();
                 break;
             }
         }
@@ -102,7 +139,82 @@ public class HiberDAO implements DAO {
         if(emp != null){
             em.remove(emp);
         }
+        for (Department dep: getAllDepartments()) {
+            if(dep.getManager() == emp){
+                dep.setManager(null);
+                em.persist(dep);
+            }
+            for (Employee employee: (dep.getEmployeeSet())) {
+                if((employee.getId()) == id){
+                    dep.getEmployeeSet().remove(employee);
+                    break;
+                }
+            }
+        }
+
+        for (Organization org: getAllOrganizations()) {
+            if(org.getManager() == emp){
+                org.setManager(null);
+                em.persist(org);
+            }
+        }
+
+        for (Assignment assignment: getAllAssignments()) {
+            if(assignment.getAuthor() == emp){
+                assignment.setAuthor(null);
+            }
+            else if(assignment.getExecutor() == emp){
+                assignment.setExecutor(null);
+            }
+            em.persist(assignment);
+        }
+
     }
+
+    @Override
+    public Employee getEmpById(long id) {
+        Employee emp;
+        emp = em.find(Employee.class, id);
+        return emp;
+    }
+
+    @Transactional
+    @Override
+    public void updateEmp(Employee employee){
+        em.merge(employee);
+    }
+
+    @Transactional
+    @Override
+    public void addEmp(Employee employee){
+        em.persist(employee);
+    }
+
+    @Transactional
+    @Override
+    public void addAssign(Assignment assignment){
+        em.persist(assignment);
+    }
+
+    @Override
+    public Assignment getAssignById(long id) {
+        Assignment assignment;
+        assignment = em.find(Assignment.class, id);
+        return assignment;
+    }
+
+    @Transactional
+    @Override
+    public void executeAssignById(long id){
+        Assignment assignment = getAssignById(id);
+        assignment.setExecution(true);
+        em.persist(assignment);
+    }
+
+
+
+
+
 
 
 

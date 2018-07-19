@@ -9,6 +9,7 @@
         <link href="<c:url value='/main.css'/>" rel="stylesheet" type="text/css">
     </head>
     <body>
+    <a class="adminButton" href="start.do"/>Главная страница</a><br>
         
 
         <h1 id="demoFont">Сотрудники:</h1>
@@ -16,10 +17,9 @@
         <tr>
             <td>emp_id</td>
             <td>name</td>
-            <td>middlename</td>
+            <td>middleName</td>
             <td>surname</td>
             <td>position</td>
-            <td>department</td>
         </tr>
         <c:forEach var="x" items="${employees}">
         <tr>
@@ -28,12 +28,16 @@
             <td>${x.middleName}</td>
             <td>${x.surname}</td>
             <td>${x.position}</td>
-            <td>${x.department}</td>
-            <td><a class="adminButton" href="deleteEmp${x.id}.do"/>Удалить</a>    </td>
+            <%--<td>${x.department}</td>--%>
+            <td><a class="myButtonDel" href="deleteEmp${x.id}.do"/>Удалить</a>    </td>
+            <td><a class="adminButton" href="editEmp${x.id}.do"/>Изменить</a>    </td>
+
 
         </tr>
         </c:forEach>
             <tbody></table>
+        <td><a class="myButtonadd" href="newEmp.do"/>Добавить сотрудника</a>    </td>
+
 
         <h1 id="demoFont">Подразделения:</h1>
         <table class="blueTable"><tbody>
@@ -76,6 +80,8 @@
         </tr>
         </c:forEach>
             <tbody></table>
+
+    <td><a class="myButtonservice" href="holturchik.do"/>Найти холтурщика</a>&nbsp&nbsp${holturchik}</td>
 
     </body>
 </html>
