@@ -14,10 +14,10 @@ public class Assignment {
 
     private String theme;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Employee author;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Employee executor;
 
     private int time;
