@@ -9,9 +9,25 @@
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>admin-pages</web-resource-name>
+            <url-pattern>/admin.do</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description>allow admins only</description>
+            <role-name>administrators</role-name>
+        </auth-constraint>
+        <user-data-constraint>
+            <transport-guarantee>NONE</transport-guarantee>
+
+        </user-data-constraint>
+
+    </security-constraint>
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
+    
     <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>
         <url-pattern>*.do</url-pattern>
@@ -21,6 +37,14 @@
             30
         </session-timeout>
     </session-config>
+    <login-config>
+        <auth-method>BASIC</auth-method>
+    </login-config>
+    <security-role>
+        <role-name>administrators</role-name>
+
+    </security-role>
+
     <welcome-file-list>
         <welcome-file>start.do</welcome-file>
     </welcome-file-list>

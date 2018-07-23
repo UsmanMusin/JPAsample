@@ -38,8 +38,14 @@ public class HiberDAO implements DAO {
     }
 
     @Override
+    @Transactional
     public List<Organization> getAllOrganizations(){
+        // left join fetch o.departmentSet deps
         List<Organization> res = em.createQuery("select o from Organization o",Organization.class).getResultList();
+        int s=0;
+        for (Organization o : res) {
+            s+=o.getDepartmentSet().size();
+        }
         return res;
     }
 
@@ -136,29 +142,6 @@ public class HiberDAO implements DAO {
     public void deleteEmp(long id) {
         Employee emp;
         emp = em.find(Employee.class, id);
-        if(emp != null){
-            em.remove(emp);
-        }
-        for (Department dep: getAllDepartments()) {
-            if(dep.getManager() == emp){
-                dep.setManager(null);
-                em.persist(dep);
-            }
-            for (Employee employee: (dep.getEmployeeSet())) {
-                if((employee.getId()) == id){
-                    dep.getEmployeeSet().remove(employee);
-                    break;
-                }
-            }
-        }
-
-        for (Organization org: getAllOrganizations()) {
-            if(org.getManager() == emp){
-                org.setManager(null);
-                em.persist(org);
-            }
-        }
-
         for (Assignment assignment: getAllAssignments()) {
             if(assignment.getAuthor() == emp){
                 assignment.setAuthor(null);
@@ -166,8 +149,36 @@ public class HiberDAO implements DAO {
             else if(assignment.getExecutor() == emp){
                 assignment.setExecutor(null);
             }
-            em.persist(assignment);
+            // em.persist(assignment);
         }
+
+        for (Department dep: getAllDepartments()) {
+            if(dep.getManager() == emp){
+                dep.setManager(null);
+                //em.persist(dep);
+            }
+         //   for (Employee employee: (dep.getEmployeeSet())) {
+         //       if((employee.getId()) == id){
+                    dep.getEmployeeSet().remove(emp);
+         //           break;
+         //       }
+         //   }
+        }
+
+
+        for (Organization org: getAllOrganizations()) {
+            if(org.getManager() == emp){
+                org.setManager(null);
+              //  em.persist(org);
+            }
+        }
+
+        if(emp != null){
+            em.remove(emp);
+        }
+
+
+
 
     }
 

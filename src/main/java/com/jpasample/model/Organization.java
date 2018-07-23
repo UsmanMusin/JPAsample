@@ -15,7 +15,7 @@ public class Organization {
     @ManyToOne()
     private Employee manager;
 
-    @OneToMany(cascade={CascadeType.PERSIST}, orphanRemoval=true,fetch = FetchType.EAGER)
+    @OneToMany(cascade={CascadeType.PERSIST}, orphanRemoval=true)
     private Set<Department> departmentSet;
 
     private String name;
