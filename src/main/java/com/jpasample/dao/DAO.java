@@ -29,7 +29,7 @@ public interface DAO {
 
     long userCheck(String user, String pass);
 
-    void deleteEmp(long id);
+    void removeEmp(Employee employee);
 
     Employee getEmpById(long id);
 

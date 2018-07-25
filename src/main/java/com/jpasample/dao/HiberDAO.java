@@ -103,7 +103,6 @@ public class HiberDAO implements DAO {
 
             Organization o1 = new Organization("Datatech", "Ufa", "Ufa");
             em.persist(o1);
-            //o1.setManager(e1);
             Set<Department> depset = new HashSet<Department>();
             Set<Employee> empset = new HashSet<>();
             depset.add(d1);
@@ -112,20 +111,12 @@ public class HiberDAO implements DAO {
             empset.add(e3);
             o1.setDepartmentSet(depset);
             d1.setEmployeeSet(empset);
-//         o1.getDepartmentSet().add(d1);
-            //o1.getDepartmentSet().add(d2);
-            //d1.setManager(e1);
-            //d1.addEmployee(e2);
-            //d2.setManager(e3);
-            //d2.addEmployee(e4);
-            //e1.setDepartment(d1);
         }
     }
 
 
     @Override
     public long userCheck(String user, String pass){
-        //List<Employee> res = em.createQuery("FROM Employee E WHERE E.name = " + user,Employee.class).getResultList();
         List<Employee> res = em.createQuery("select  e from Employee e",Employee.class).getResultList();
         long b = 0;
         for (Employee e: res) {
@@ -137,49 +128,11 @@ public class HiberDAO implements DAO {
         return b;
     }
 
+
     @Override
     @Transactional
-    public void deleteEmp(long id) {
-        Employee emp;
-        emp = em.find(Employee.class, id);
-        for (Assignment assignment: getAllAssignments()) {
-            if(assignment.getAuthor() == emp){
-                assignment.setAuthor(null);
-            }
-            else if(assignment.getExecutor() == emp){
-                assignment.setExecutor(null);
-            }
-            // em.persist(assignment);
-        }
-
-        for (Department dep: getAllDepartments()) {
-            if(dep.getManager() == emp){
-                dep.setManager(null);
-                //em.persist(dep);
-            }
-         //   for (Employee employee: (dep.getEmployeeSet())) {
-         //       if((employee.getId()) == id){
-                    dep.getEmployeeSet().remove(emp);
-         //           break;
-         //       }
-         //   }
-        }
-
-
-        for (Organization org: getAllOrganizations()) {
-            if(org.getManager() == emp){
-                org.setManager(null);
-              //  em.persist(org);
-            }
-        }
-
-        if(emp != null){
-            em.remove(emp);
-        }
-
-
-
-
+    public void removeEmp(Employee employee){
+        em.remove(employee);
     }
 
     @Override

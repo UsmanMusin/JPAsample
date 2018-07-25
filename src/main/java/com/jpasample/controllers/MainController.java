@@ -26,6 +26,7 @@ import java.util.Set;
 public class MainController {
     
     Logger log = LoggerFactory.getLogger(this.getClass());
+
     ServiceImpl service;
 
     @Autowired
@@ -90,7 +91,7 @@ public class MainController {
 
     @RequestMapping("deleteEmp{id}.do")
     public ModelAndView deleteEmp(@PathVariable("id") long id) {
-        dao.deleteEmp(id);
+        service.deleteEmp(id);
         ModelAndView mv = new ModelAndView("redirect:admin.do");
         return mv;
     }
@@ -175,8 +176,10 @@ public class MainController {
 
     @RequestMapping("holturchik.do")
     public ModelAndView holturchik() {
-        String holturchik = service.holturchik();
-        ModelAndView mv = new ModelAndView("redirect:admin.do");
+        String holturchik = service.trudyaga();
+        ModelAndView mv = new ModelAndView("redirect:userpage.do");
+        //ModelAndView mv = new ModelAndView("redirect:admin.do");
+
         mv.addObject("holturchik", holturchik);
         return mv;
     }
