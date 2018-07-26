@@ -81,7 +81,7 @@
         </c:forEach>
             <tbody></table>
 
-    <td><a class="myButtonservice" href="holturchik.do"/>Найти холтурщика</a>&nbsp&nbsp${holturchik}</td>
+    <td><a class="myButtonservice" href="trudyaga.do"/>Найти трудягу</a>&nbsp&nbsp${trudyaga}</td>
 
     </body>
 </html>

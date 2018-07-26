@@ -5,6 +5,7 @@ import com.jpasample.dao.DAO;
 
 import com.jpasample.model.Assignment;
 import com.jpasample.model.Employee;
+import com.jpasample.service.Service;
 import com.jpasample.service.ServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,7 +28,8 @@ public class MainController {
     
     Logger log = LoggerFactory.getLogger(this.getClass());
 
-    ServiceImpl service;
+    @Autowired
+    Service service;
 
     @Autowired
     DAO dao;
@@ -174,13 +176,11 @@ public class MainController {
         return "redirect:userpage.do";
     }
 
-    @RequestMapping("holturchik.do")
+    @RequestMapping("trudyaga.do")
     public ModelAndView holturchik() {
-        String holturchik = service.trudyaga();
-        ModelAndView mv = new ModelAndView("redirect:userpage.do");
-        //ModelAndView mv = new ModelAndView("redirect:admin.do");
-
-        mv.addObject("holturchik", holturchik);
+        String trudyaga = service.trudyaga();
+        ModelAndView mv = new ModelAndView("redirect:admin.do");
+        mv.addObject("trudyaga", trudyaga);
         return mv;
     }
  

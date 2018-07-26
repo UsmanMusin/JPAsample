@@ -11,7 +11,6 @@
 <body>
 <div id = "demoFont">Личный кабинет: ${user}</div>
 <td><a class="myButtonDel" href="exit.do"/>Выйти</a>    </td>
-<td><a class="myButtonservice" href="holturchik.do"/>Найти холтурщика</a>&nbsp&nbsp${holturchik}</td>
 <hr>
 <a class="myButtonadd" href="newAssign.do"/>Создать поручение</a>
 <h1 id="demoFont">Мои поручения:</h1>

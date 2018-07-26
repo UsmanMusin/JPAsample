@@ -45,7 +45,7 @@ public class ServiceImpl implements Service {
 
     @Override
     public String trudyaga(){
-        /*int max = 0;
+        int max = 0;
         boolean have = false;
         Employee maxEmp = new Employee();
         for (Employee employee: dao.getAllEmployees()) {
@@ -56,10 +56,9 @@ public class ServiceImpl implements Service {
             }
         }
         if(have){
-            return maxEmp.getSurname();
+            return maxEmp.getSurname() + maxEmp.getName();
         }
-        else return "Все на ровне";*/
-        return "lol";
+        else return "Все работают одинаково";
     }
 
 
